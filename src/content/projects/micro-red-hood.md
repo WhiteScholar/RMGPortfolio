@@ -1,10 +1,12 @@
 ---
 title: Micro Red Hood
 category: game-design
-summary: A small two-stage pixel-art platformer built in microStudio, with all the art made by me.
+summary: A small two-stage pixel-art platformer built in microStudio, with all
+  the art made by me.
 cover: /images/projects/micro-red-hood/cover.webp
 date: 2026-03-22
 featured: true
+draft: false
 pixelArt: true
 role: Designer, artist, programmer
 tools:
@@ -12,15 +14,14 @@ tools:
 itchUrl: https://redmage-gaming.itch.io/micro-red-hood
 gallery:
   - image: /images/projects/micro-red-hood/stage-1.webp
-    caption: Stage one
+    caption: Tile set testing
   - image: /images/projects/micro-red-hood/cover.webp
-    caption: Stage two
+    caption: Stage one
   - image: /images/projects/micro-red-hood/tileset.webp
     caption: Tile set (16×16)
   - image: /images/projects/micro-red-hood/character.webp
     caption: Red Hood character sprite
 ---
-
 A small platformer made in the microStudio engine, using 16×16 pixel tiles and character sprites. Red Hood has a full set of idle, walk and jump animations.
 
 ## What I did

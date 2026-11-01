@@ -1,10 +1,7 @@
 ---
 title: About
-portrait:
-resume:
 ---
-
-Hi, I'm **George Rounds**: game designer, VR enthusiast, and forever curious, always looking to learn something new.
+Hi, I'm **George Rounds**: game designer, VR enthusiast, forever curious, and always looking to learn something new.
 
 I'm currently a student at the **Borough of Manhattan Community College**, working on my associate's degree in Multimedia Programming and Design with a focus on game design. Before that, I spent years in sales and retail. Now I'm branching out to follow my passions.
 

@@ -1,0 +1,10 @@
+{
+  "name": "Your Name",
+  "tagline": "Game designer, graphic designer and animator.",
+  "intro": "I design games and the art that goes with them. Here's a selection of my work across game design, graphic design and 2D/3D animation.",
+  "email": "you@example.com",
+  "links": [
+    { "label": "itch.io", "url": "https://itch.io" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com" }
+  ]
+}

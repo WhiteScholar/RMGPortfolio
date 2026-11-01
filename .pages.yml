@@ -1,0 +1,155 @@
+# Pages CMS configuration: https://pagescms.org/docs/configuration/
+# Sign in at https://app.pagescms.org with GitHub and open this repository.
+
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    view:
+      fields: [title, category, date, featured, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - name: game-design
+              label: Game Design
+            - name: graphic-design
+              label: Graphic Design
+            - name: animation-2d
+              label: 2D Animation
+            - name: animation-3d
+              label: 3D Animation
+      - name: summary
+        label: Summary (one line, shown on the card)
+        type: string
+        required: true
+      - name: cover
+        label: Cover image
+        type: image
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: featured
+        label: Featured (shown first)
+        type: boolean
+      - name: draft
+        label: Draft (hidden from the site)
+        type: boolean
+      - name: role
+        label: My role
+        type: string
+      - name: tools
+        label: Tools / engines
+        type: string
+        list: true
+      - name: itchUrl
+        label: itch.io link (adds a "Play on itch.io" button)
+        type: string
+      - name: videoUrl
+        label: Video (YouTube or Vimeo link, shown instead of the cover)
+        type: string
+      - name: gallery
+        label: Gallery
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{caption}"
+        fields:
+          - name: image
+            label: Image
+            type: image
+            required: true
+          - name: caption
+            label: Caption
+            type: string
+      - name: links
+        label: Extra links (buttons next to the play button)
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Button text
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true
+      - name: body
+        label: Write-up
+        type: rich-text
+        format: markdown
+
+  - name: about
+    label: About page
+    type: file
+    path: src/content/pages/about.md
+    fields:
+      - name: title
+        label: Page title
+        type: string
+        required: true
+      - name: portrait
+        label: Portrait photo
+        type: image
+      - name: resume
+        label: Résumé (PDF)
+        type: file
+      - name: body
+        label: Bio
+        type: rich-text
+        format: markdown
+
+  - name: site
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: name
+        label: Your name
+        type: string
+        required: true
+      - name: tagline
+        label: Tagline (big heading on the home page)
+        type: string
+      - name: intro
+        label: Intro (paragraph under the heading)
+        type: text
+      - name: email
+        label: Contact email
+        type: string
+      - name: links
+        label: Social / profile links (footer)
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Name
+            type: string
+            required: true
+          - name: url
+            label: URL
+            type: string
+            required: true

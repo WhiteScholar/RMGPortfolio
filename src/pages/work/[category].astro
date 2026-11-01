@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import CategoryNav from '../../components/CategoryNav.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import { categories } from '../../data/categories';
+import { getProjects } from '../../lib/utils';
+
+export function getStaticPaths() {
+  return categories.map((c) => ({ params: { category: c.id }, props: { label: c.label } }));
+}
+
+const { category } = Astro.params;
+const { label } = Astro.props;
+
+const all = await getProjects();
+const counts = Object.groupBy(all, (p) => p.data.category);
+const countMap = Object.fromEntries(Object.entries(counts).map(([k, v]) => [k, v?.length ?? 0]));
+const projects = all.filter((p) => p.data.category === category);
+---
+
+<Base title={label}>
+  <section class="container head">
+    <h1>{label}</h1>
+  </section>
+  <section class="container">
+    <CategoryNav current={category} counts={countMap} />
+    <ProjectGrid projects={projects} />
+  </section>
+</Base>
+
+<style>
+  .head { padding: 3.5rem 1.25rem 1.5rem; }
+  h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.4rem); }
+</style>

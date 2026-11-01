@@ -1,0 +1,125 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Gallery from '../../components/Gallery.astro';
+import { categoryLabel } from '../../data/categories';
+import { getProjects, isVideoFile, url, videoEmbedUrl, type Project } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => {
+    // Previous/next links stay within the same category.
+    const siblings = projects.filter((p) => p.data.category === project.data.category);
+    const i = siblings.indexOf(project);
+    return {
+      params: { id: project.id },
+      props: { project, prev: siblings[i - 1], next: siblings[i + 1] },
+    };
+  });
+}
+
+interface Props {
+  project: Project;
+  prev?: Project;
+  next?: Project;
+}
+
+const { project, prev, next } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+
+const embed = data.videoUrl ? videoEmbedUrl(data.videoUrl) : undefined;
+const videoFile = data.videoUrl && isVideoFile(data.videoUrl) ? data.videoUrl : undefined;
+const categoryHref = url(`/work/${data.category}/`);
+---
+
+<Base title={data.title} description={data.summary}>
+  <article class="container">
+    <header class="head">
+      <a class="back" href={categoryHref}>← {categoryLabel(data.category)}</a>
+      <h1>{data.title}</h1>
+      <p class="summary">{data.summary}</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>{data.date.getFullYear()}</dd></div>
+        {data.role && <div><dt>Role</dt><dd>{data.role}</dd></div>}
+        {data.tools.length > 0 && <div><dt>Tools</dt><dd>{data.tools.join(', ')}</dd></div>}
+      </dl>
+
+      {
+        (data.itchUrl || data.links.length > 0) && (
+          <div class="actions">
+            {data.itchUrl && (
+              <a class="button" href={data.itchUrl} target="_blank" rel="noopener">
+                ▶ Play on itch.io
+              </a>
+            )}
+            {data.links.map((l) => (
+              <a class="button secondary" href={l.url} target="_blank" rel="noopener">
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    <div class="media">
+      {
+        embed ? (
+          <div class="video">
+            <iframe src={embed} title={data.title} allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy" />
+          </div>
+        ) : videoFile ? (
+          <video src={url(videoFile)} poster={url(data.cover)} controls preload="metadata" />
+        ) : (
+          <img src={url(data.cover)} alt="" />
+        )
+      }
+    </div>
+
+    <div class="prose body">
+      <Content />
+    </div>
+
+    {data.gallery.length > 0 && <Gallery items={data.gallery} />}
+
+    <nav class="pager" aria-label="More projects">
+      {prev ? <a href={url(`/projects/${prev.id}/`)}><span class="muted">← Previous</span>{prev.data.title}</a> : <span />}
+      {next && <a class="next" href={url(`/projects/${next.id}/`)}><span class="muted">Next →</span>{next.data.title}</a>}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .head { padding: 3rem 0 2rem; max-width: 760px; }
+  .back { text-decoration: none; color: var(--muted); font-size: 0.92rem; }
+  .back:hover { color: var(--text); }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0.6rem 0 0.6rem; }
+  .summary { font-size: 1.15rem; color: var(--muted); margin: 0 0 1.5rem; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 0.5rem 2.5rem; margin: 0 0 1.75rem; }
+  dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  dd { margin: 0; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .media img, .media video { width: 100%; border-radius: var(--radius); background: var(--border); }
+  .video { aspect-ratio: 16 / 9; }
+  .video iframe { width: 100%; height: 100%; border: 0; border-radius: var(--radius); }
+
+  .body { margin-top: 2.5rem; }
+
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .pager a { display: flex; flex-direction: column; text-decoration: none; font-weight: 600; }
+  .pager a:hover { color: var(--accent); }
+  .pager span { font-size: 0.85rem; font-weight: 400; }
+  .pager .next { text-align: right; margin-left: auto; }
+</style>

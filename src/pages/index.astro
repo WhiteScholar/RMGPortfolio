@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import CategoryNav from '../components/CategoryNav.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import site from '../data/site.json';
+import { getProjects } from '../lib/utils';
+
+const projects = await getProjects();
+const counts = Object.groupBy(projects, (p) => p.data.category);
+const countMap = Object.fromEntries(Object.entries(counts).map(([k, v]) => [k, v?.length ?? 0]));
+---
+
+<Base>
+  <section class="container hero">
+    <h1>{site.tagline}</h1>
+    <p class="muted">{site.intro}</p>
+  </section>
+
+  <section class="container">
+    <CategoryNav counts={countMap} />
+    <ProjectGrid projects={projects} />
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 4rem 1.25rem 2.5rem; }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); max-width: 22ch; margin: 0 0 1rem; }
+  .hero p { max-width: 60ch; margin: 0; font-size: 1.1rem; }
+</style>

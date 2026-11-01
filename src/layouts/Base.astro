@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+import { url } from '../lib/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.tagline } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : site.name;
+const path = Astro.url.pathname.replace(/\/$/, '');
+const isActive = (href: string) => {
+  const target = url(href).replace(/\/$/, '');
+  return href === '/' ? path === target || path.startsWith(url('/work')) || path.startsWith(url('/projects')) : path.startsWith(target);
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container bar">
+        <a class="brand" href={url('/')}>{site.name}</a>
+        <nav aria-label="Main">
+          <a href={url('/')} aria-current={isActive('/') ? 'page' : undefined}>Work</a>
+          <a href={url('/about/')} aria-current={isActive('/about') ? 'page' : undefined}>About</a>
+          {site.email && <a href={`mailto:${site.email}`}>Contact</a>}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container bar">
+        <span class="muted">© {new Date().getFullYear()} {site.name}</span>
+        <nav aria-label="Elsewhere">
+          {(site.links ?? []).map((l) => <a href={l.url} rel="me noopener" target="_blank">{l.label}</a>)}
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    min-height: 4rem;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  nav a:hover, nav a[aria-current='page'] { color: var(--text); }
+  main { min-height: 70vh; }
+  .site-footer {
+    margin-top: 5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+</style>

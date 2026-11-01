@@ -1,0 +1,69 @@
+---
+import { categoryLabel } from '../data/categories';
+import { url, type Project } from '../lib/utils';
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+{projects.length === 0 && <p class="muted">Nothing here yet.</p>}
+
+<ul class="grid">
+  {
+    projects.map((p) => (
+      <li>
+        <a class="card" href={url(`/projects/${p.id}/`)}>
+          <div class="thumb">
+            <img src={url(p.data.cover)} alt="" loading="lazy" decoding="async" />
+          </div>
+          <div class="meta">
+            <span class="category">{categoryLabel(p.data.category)}</span>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.summary}</p>
+          </div>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 2rem 1.5rem;
+  }
+  .card {
+    display: block;
+    text-decoration: none;
+  }
+  .thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--border);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  .card:hover .thumb img { transform: scale(1.03); }
+  .meta { padding-top: 0.8rem; }
+  .category {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  h3 { margin: 0.2rem 0 0.3rem; font-size: 1.15rem; }
+  .card:hover h3 { color: var(--accent); }
+  p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+</style>

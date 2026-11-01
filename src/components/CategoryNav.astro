@@ -1,0 +1,50 @@
+---
+import { categories } from '../data/categories';
+import { url } from '../lib/utils';
+
+interface Props {
+  current?: string;
+  counts: Record<string, number>;
+}
+
+const { current, counts } = Astro.props;
+const total = Object.values(counts).reduce((a, b) => a + b, 0);
+---
+
+<nav class="filters" aria-label="Categories">
+  <a href={url('/')} aria-current={!current ? 'page' : undefined}>All <span>{total}</span></a>
+  {
+    categories
+      .filter((c) => counts[c.id])
+      .map((c) => (
+        <a href={url(`/work/${c.id}/`)} aria-current={current === c.id ? 'page' : undefined}>
+          {c.label} <span>{counts[c.id]}</span>
+        </a>
+      ))
+  }
+</nav>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 2rem;
+  }
+  a {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.92rem;
+    color: var(--muted);
+    transition: border-color 0.15s, color 0.15s;
+  }
+  a:hover { color: var(--text); border-color: var(--muted); }
+  a[aria-current='page'] {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+  }
+  span { opacity: 0.6; margin-left: 0.15rem; }
+</style>

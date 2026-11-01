@@ -55,6 +55,9 @@ content:
       - name: draft
         label: Draft (hidden from the site)
         type: boolean
+      - name: pixelArt
+        label: Pixel art (keep images crisp when scaled up)
+        type: boolean
       - name: role
         label: My role
         type: string

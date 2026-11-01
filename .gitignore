@@ -1,5 +1,7 @@
 node_modules/
 dist/
 .astro/
+# Raw project files dropped off for import; never published
+_source/
 .DS_Store
 Thumbs.db

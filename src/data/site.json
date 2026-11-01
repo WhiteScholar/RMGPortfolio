@@ -1,10 +1,10 @@
 {
-  "name": "Your Name",
-  "tagline": "Game designer, graphic designer and animator.",
-  "intro": "I design games and the art that goes with them. Here's a selection of my work across game design, graphic design and 2D/3D animation.",
-  "email": "you@example.com",
+  "name": "George Rounds",
+  "tagline": "Game designer & multimedia artist.",
+  "intro": "I design games, from narrative experiments to pixel-art platformers, and make the art and animation that go with them. Godot is my engine of choice; curiosity is my default setting.",
+  "email": "RandomRedMage@gmail.com",
   "links": [
-    { "label": "itch.io", "url": "https://itch.io" },
-    { "label": "LinkedIn", "url": "https://www.linkedin.com" }
+    { "label": "itch.io", "url": "https://redmage-gaming.itch.io/" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/george-rounds-3980908b/" }
   ]
 }

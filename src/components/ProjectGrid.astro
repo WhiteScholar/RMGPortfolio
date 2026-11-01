@@ -17,7 +17,7 @@ const { projects } = Astro.props;
       <li>
         <a class="card" href={url(`/projects/${p.id}/`)}>
           <div class="thumb">
-            <img src={url(p.data.cover)} alt="" loading="lazy" decoding="async" />
+            <img src={url(p.data.cover)} alt="" loading="lazy" decoding="async" class:list={{ 'pixel-art': p.data.pixelArt }} />
           </div>
           <div class="meta">
             <span class="category">{categoryLabel(p.data.category)}</span>

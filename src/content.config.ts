@@ -17,6 +17,7 @@ const projects = defineCollection({
     date: z.coerce.date(),
     featured: z.boolean().nullish().transform((v) => v ?? false),
     draft: z.boolean().nullish().transform((v) => v ?? false),
+    pixelArt: z.boolean().nullish().transform((v) => v ?? false),
     role: optionalText,
     tools: list(z.string()),
     itchUrl: optionalText,

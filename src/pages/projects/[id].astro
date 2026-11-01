@@ -34,7 +34,7 @@ const categoryHref = url(`/work/${data.category}/`);
 ---
 
 <Base title={data.title} description={data.summary}>
-  <article class="container">
+  <article class:list={['container', { 'pixel-art': data.pixelArt }]}>
     <header class="head">
       <a class="back" href={categoryHref}>← {categoryLabel(data.category)}</a>
       <h1>{data.title}</h1>

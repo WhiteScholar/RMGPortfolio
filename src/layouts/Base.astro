@@ -26,12 +26,16 @@ const isActive = (href: string) => {
     <meta name="description" content={description} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={url('/favicon.png')} type="image/png" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
   </head>
   <body>
     <header class="site-header">
       <div class="container bar">
-        <a class="brand" href={url('/')}>{site.name}</a>
+        <a class="brand" href={url('/')}>
+          <img src={url('/images/logo.webp')} alt="" width="29" height="32" />
+          {site.name}
+        </a>
         <nav aria-label="Main">
           <a href={url('/')} aria-current={isActive('/') ? 'page' : undefined}>Work</a>
           <a href={url('/about/')} aria-current={isActive('/about') ? 'page' : undefined}>About</a>
@@ -73,6 +77,9 @@ const isActive = (href: string) => {
     min-height: 4rem;
   }
   .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-weight: 700;
     font-size: 1.1rem;
     text-decoration: none;

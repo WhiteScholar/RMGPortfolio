@@ -7,4 +7,4 @@ I'm currently a student at the **Borough of Manhattan Community College**, worki
 
 My go-to engine is **Godot**, but I like exploring tools of every size, from tiny engines like Bitsy and microStudio to Twine, Cinema 4D, Adobe Animate and Photoshop. You'll find a mix of game design, graphic design and 2D/3D animation work here.
 
-You can play my games on [itch.io](https://redmage-gaming.itch.io/), connect with me on [LinkedIn](https://www.linkedin.com/in/george-rounds-3980908b/), or email me using the button below.
+You can play my games on [itch.io](https://redmage-gaming.itch.io/), connect with me on [LinkedIn](https://www.linkedin.com/in/george-rounds-3980908b/), or email me at the address below.

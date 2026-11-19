@@ -39,7 +39,6 @@ const isActive = (href: string) => {
         <nav aria-label="Main">
           <a href={url('/')} aria-current={isActive('/') ? 'page' : undefined}>Work</a>
           <a href={url('/about/')} aria-current={isActive('/about') ? 'page' : undefined}>About</a>
-          {site.email && <a href={`mailto:${site.email}`}>Contact</a>}
         </nav>
       </div>
     </header>

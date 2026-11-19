@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import BookMockup from '../../components/BookMockup.astro';
 import Gallery from '../../components/Gallery.astro';
 import { categoryLabel } from '../../data/categories';
 import { getProjects, isVideoFile, url, videoEmbedUrl, type Project } from '../../lib/utils';
@@ -72,8 +73,18 @@ const categoryHref = url(`/work/${data.category}/`);
           </div>
         ) : videoFile ? (
           <video src={url(videoFile)} poster={url(data.cover)} controls preload="metadata" />
+        ) : data.bookMockup ? (
+          <BookMockup assets={data.bookMockup.assets} label={`${data.title} shown on a 3D hardcover`} />
         ) : (
           <img src={url(data.cover)} alt="" />
+        )
+      }
+      {
+        data.bookMockup?.flat && (
+          <figure class="flat">
+            <img src={url(data.bookMockup.flat)} alt={`${data.title}, full jacket laid flat`} loading="lazy" />
+            <figcaption class="muted">The full wraparound jacket with flaps, laid flat.</figcaption>
+          </figure>
         )
       }
     </div>
@@ -106,6 +117,8 @@ const categoryHref = url(`/work/${data.category}/`);
 
   .media img, .media video { width: 100%; border-radius: var(--radius); background: var(--border); }
   .video { aspect-ratio: 16 / 9; }
+  .flat { margin: 2rem 0 0; }
+  .flat figcaption { font-size: 0.85rem; margin-top: 0.5rem; }
   .video iframe { width: 100%; height: 100%; border: 0; border-radius: var(--radius); }
 
   .body { margin-top: 2.5rem; }

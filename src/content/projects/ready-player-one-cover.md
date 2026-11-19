@@ -8,9 +8,10 @@ role: Designer
 tools:
   - Illustrator
   - InDesign
+bookMockup:
+  assets: /images/projects/ready-player-one-cover/mockup/
+  flat: /images/projects/ready-player-one-cover/final.webp
 gallery:
-  - image: /images/projects/ready-player-one-cover/final.webp
-    caption: "The full wraparound cover: flaps, back, spine and front"
   - image: /images/projects/ready-player-one-cover/artwork.webp
     caption: The cover artwork before typesetting
   - image: /images/projects/ready-player-one-cover/cover-sketch.webp

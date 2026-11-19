@@ -99,6 +99,16 @@ content:
             label: URL
             type: string
             required: true
+      - name: bookMockup
+        label: 3D book mockup (book covers only, shown instead of the cover)
+        type: object
+        fields:
+          - name: assets
+            label: Folder holding front/back/spine/flapR.webp, ending in / (e.g. /images/projects/my-book/mockup/)
+            type: string
+          - name: flat
+            label: Flat jacket image (shown under the 3D book)
+            type: image
       - name: body
         label: Write-up
         type: rich-text

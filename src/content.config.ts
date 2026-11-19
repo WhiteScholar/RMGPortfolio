@@ -24,6 +24,12 @@ const projects = defineCollection({
     videoUrl: optionalText,
     gallery: list(z.object({ image: z.string(), caption: optionalText })),
     links: list(z.object({ label: z.string(), url: z.string() })),
+    // Interactive 3D book (see src/components/BookMockup.astro). The CMS may save an
+    // empty object, so it only counts as set when the assets folder is filled in.
+    bookMockup: z
+      .object({ assets: optionalText, flat: optionalText })
+      .nullish()
+      .transform((v) => (v?.assets ? { assets: v.assets, flat: v.flat } : undefined)),
   }),
 });
 

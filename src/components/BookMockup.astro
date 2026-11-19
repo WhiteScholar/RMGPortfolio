@@ -1,0 +1,52 @@
+---
+// Interactive 3D hardcover (the <book-mockup> web component in ./book-mockup.js).
+// The script is bundled by Astro and only loads on pages that render this component.
+import { url } from '../lib/utils';
+
+interface Props {
+  /** Folder holding front/back/spine/flapR.webp, ending in "/". */
+  assets: string;
+  label: string;
+}
+
+const { assets, label } = Astro.props;
+const src = url(assets).replace(/\/?$/, '/');
+---
+
+<figure class="book">
+  <book-mockup src={src} label={label}></book-mockup>
+  <noscript>
+    <style>book-mockup, .book .hint { display: none; }</style>
+    <img class="fallback" src={`${src}front.webp`} alt={label} />
+  </noscript>
+  <figcaption class="hint muted">Drag to turn the book, or use the buttons.</figcaption>
+</figure>
+
+<script>
+  import './book-mockup.js';
+</script>
+
+<style>
+  .book { margin: 0; }
+  book-mockup {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 640px;
+    border-radius: var(--radius);
+    background: radial-gradient(110% 90% at 50% 35%, #ffffff, #dedad6);
+    --btn-bg: rgb(255 255 255 / 0.8);
+    --btn-fg: var(--text);
+    --btn-active-bg: var(--accent);
+    --btn-active-fg: var(--accent-text);
+  }
+  @media (prefers-color-scheme: dark) {
+    book-mockup {
+      background: radial-gradient(110% 90% at 50% 35%, #2a2927, #141312);
+      --btn-bg: rgb(62 60 57 / 0.85);
+      --shadow: rgb(0 0 0 / 0.7);
+    }
+  }
+  .fallback { max-width: 360px; margin: 0 auto; border-radius: 3px; }
+  .hint { text-align: center; font-size: 0.85rem; margin-top: 0.6rem; }
+</style>
